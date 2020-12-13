@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Note Card Submission</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <form id="note-form">
+
+    <label for="cls">Class</label>
+    <input type="text" id="cls" name="class" placeholder="Math...">
+
+    <label for="denomination">Denomination</label>
+    <input type="text" id="denomination" name="denomination" placeholder="Equations...">
+
+    <label for="importance">Importance</label>
+    <select id="importance" name="importance">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+    </select>
+
+    <label for="question">Question</label>
+    <textarea id="question" name="question" placeholder="What is 2 squared?...." style="height:200px"></textarea>
+
+    <label for="answer">Answer</label>
+    <textarea id="answer" name="answer" placeholder="4" style="height:200px"></textarea>
+
+    <button id="btn">Add Note</button>
+
+    </form>
+    <p id="result"></p>
+
+</div>
+<script>
+    const addNote = (ev)=>{
+        ev.preventDefault();
+        let note = {
+            importance:  document.getElementById('importance').value,
+            cls: document.getElementById('cls').value,
+            denomination: document.getElementById('denomination').value,
+            question:  document.getElementById('question').value,
+            answer:  document.getElementById('answer').value
+        }
+
+        document.forms[0].reset();
+        const jsonString  = JSON.stringify(note, '\t', 2)
+        console.log(jsonString);
+
+        const xhr = new XMLHttpRequest();
+        ENDPOINT = "http://127.0.0.1:8000/addnotes"
+
+        xhr.open("POST", ENDPOINT);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(jsonString);
+
+    }
+    document.addEventListener('DOMContentLoaded', ()=>{
+        document.getElementById('btn').addEventListener('click', addNote);
+       });
+
+
+</script>
+
+</body>
+</html>
