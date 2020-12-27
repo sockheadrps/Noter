@@ -1,0 +1,82 @@
+{% extends "test.html" %}
+
+{% block content %}
+    <div id="flashcards">
+        <div class="flashcard">
+            <div class="front" >
+                <div class="data word">
+                    <div class="metadata">
+                        <div id="importance">
+                            Importance: {{ importance }}
+                        </div>
+                        <div id="class">
+                            Class: {{ class }}
+                        </div>
+                        <div id="denomination">
+                            Denomination: {{ denomination }}
+                        </div>
+                    </div>
+                        <div id="question">
+                            {{ question }}
+                        </div>
+
+                </div>
+            </div>
+
+            <div class="back">
+                    <div class="word">
+<!--                        <div class="answer">-->
+                            {{ answer }}
+<!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="search-area .container">
+        <form>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Email address</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            </div>
+                <div class="form-group">
+                <label for="exampleFormControlSelect2">Example multiple select</label>
+                <select multiple class="form-control" id="exampleFormControlSelect2">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Example textarea</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+
+<!--<div id="container">-->
+<!--    <div id="importance">-->
+<!--    importance: {{ importance }}-->
+<!--    </div>-->
+
+<!--    <div id="class">-->
+<!--        class: {{ class }}-->
+<!--    </div>-->
+
+<!--    <div id="denomination">-->
+<!--        denomination: {{ denomination }}-->
+<!--    </div>-->
+
+<!--    <div id="question">-->
+<!--        question: {{ question }}-->
+<!--    </div>-->
+
+<!--    <div id="answer">-->
+<!--        answer: {{ answer }}-->
+<!--    </div>-->
+<!--</div>-->
+

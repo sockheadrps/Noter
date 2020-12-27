@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Note Card Submission</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="{{ url_for('static', path='/css/form.css') }}" rel="stylesheet">
 </head>
 <body>
 
@@ -34,7 +34,7 @@
 
     </form>
     <p id="result"></p>
-
+</body>
 </div>
 <script>
     const addNote = (ev)=>{
@@ -52,7 +52,7 @@
         console.log(jsonString);
 
         const xhr = new XMLHttpRequest();
-        ENDPOINT = "http://127.0.0.1:8000/addnotes"
+        ENDPOINT = "http://127.0.0.1:8000/add_note_to_db"
 
         xhr.open("POST", ENDPOINT);
         xhr.setRequestHeader("Content-type", "application/json");
@@ -66,5 +66,5 @@
 
 </script>
 
-</body>
+
 </html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Note Cards</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="{{ url_for('static', path='/css/main.css') }}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+</head>
+<header>
+    <div class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <a class="navbar-brand" href="/">1
+            <img style="max-width:120px" src="{{ url_for('static', path='/imgs/main-logo.png') }}">
+        </a>
+    <form class="form-inline">
+
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</div>
+    <div class="card text-center" style="width: max; height: 50%">
+    <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+
+</div>
+
+
+</header>
+<body>
+
+<div class="container">
+    <form id="note-form">
+
+    <label for="cls">Class</label>
+    <input type="text" id="cls" name="class" placeholder="Math...">
+
+    <label for="denomination">Denomination</label>
+    <input type="text" id="denomination" name="denomination" placeholder="Equations...">
+
+    <label for="importance">Importance</label>
+    <select id="importance" name="importance" >
+        <option value="None" selected="selected">None</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+    </select>
+
+    <button id="btn">Flashcard</button>
+
+    </form>
+    <p id="result">hi</p>
+
+</div>
+
+
+</body>
+</html>
+
+
+<script>
+    const addNote = (ev)=>{
+        ev.preventDefault();
+        if (document.getElementById('importance').value.length == 0)
+            document.getElementById('importance').value = "None";
+
+        if (document.getElementById('denomination').value.length == 0)
+            document.getElementById('denomination').value = "None";
+
+        let note = {
+            importance:  document.getElementById('importance').value,
+            cls: document.getElementById('cls').value,
+            denomination: document.getElementById('denomination').value,
+
+        }
+        console.log(note)
+        document.forms[0].reset();
+        const jsonString  = JSON.stringify(note, '\t', 2)
+        console.log(jsonString);
+
+        const xhr = new XMLHttpRequest();
+        ENDPOINT = `http://127.0.0.1:8000/api/notes/random/${note["cls"]}/${note["denomination"]}/${note["importance"]}`
+        console.log(ENDPOINT)
+
+        xhr.open("GET", ENDPOINT);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(jsonString);
+
+
+        xhr.onload = () =>{
+            var firstRandomElement = xhr.responseText;
+            var randomItem = firstRandomElement[Math.floor(Math.random()*firstRandomElement.length)];
+            console.log(firstRandomElement)
+            console.log(typeof randomItem)
+            document.getElementById('result').innerHTML = firstRandomElement
+
+        }
+    }
+    document.addEventListener('DOMContentLoaded', ()=>{
+        document.getElementById('btn').addEventListener('click', addNote);
+       });
+</script>
+
+
+
+<!-- <script>
+    const addNote = (ev)=>{
+        ev.preventDefault();
+        let note = {
+            importance:  document.getElementById('importance').value,
+            cls: document.getElementById('cls').value,
+            denomination: document.getElementById('denomination').value,
+
+        }
+        document.forms[0].reset();
+        const jsonString  = JSON.stringify(note, '\t', 2)
+        console.log(jsonString);
+
+        const xhr = new XMLHttpRequest();
+        ENDPOINT = `http://127.0.0.1:8000/api/notes/${note["cls"]}/${note["denomination"]}/${note["importance"]}`
+        console.log(ENDPOINT)
+
+        xhr.open("GET", ENDPOINT);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(jsonString);
+
+
+        xhr.onload = () =>{
+            var firstRandomElement = _.shuffle(xhr.response);
+            var firstRandomElement = xhr.response;
+            console.log(firstRandomElement)
+            console.log(typeof firstRandomElement)
+
+        }
+
+    }
+    document.addEventListener('DOMContentLoaded', ()=>{
+        document.getElementById('btn').addEventListener('click', addNote);
+       });
+
+
+</script> -->
